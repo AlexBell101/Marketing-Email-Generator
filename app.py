@@ -75,37 +75,6 @@ add_custom_css()
 # Title section
 st.title("Marketing Email Generator")
 
-# Main section - organized as a form
-with st.form("email_form"):
-    st.markdown("### Enter Email Details")
-
-    # Form fields
-    subject = st.text_input("Subject", placeholder="Enter your email subject here")
-    recipient_name = st.text_input("Recipient Name", placeholder="Enter recipient's name")
-    sender_name = st.text_input("Sender Name", placeholder="Enter your name or company")
-    email_body = st.text_area("Email Body", placeholder="Write your email content here...", height=200)
-
-    # Submit button
-    generate_button = st.form_submit_button("Generate Email")
-
-# Email generation output (just a mockup for demonstration)
-if generate_button:
-    st.write("### Generated Email Preview:")
-    st.write(f"**Subject**: {subject}")
-    st.write(f"Hi {recipient_name},")
-    st.write(f"{email_body}")
-    st.write(f"Best regards,")
-    st.write(f"{sender_name}")
-
-# Footer
-st.markdown(
-    """
-    <footer>
-        &copy; 2024 Marketing Email Generator. Designed by <a href="https://yourportfolio.com" target="_blank">Your Name</a>
-    </footer>
-    """,
-    unsafe_allow_html=True,
-)
 
 
 # Configure OpenAI API key via environment variable
