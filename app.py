@@ -96,7 +96,7 @@ def generate_marketing_email(prompt, touches, persona, marketing_asset, objectiv
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a marketing copywriter tasked with writing compelling B2B emails."},
-                {"role": "user", "content": f"Write an email to a {persona} based on this asset: {marketing_asset}. The goal of the email is to {objective}."}
+                {"role": "user", "content": f"{prompt}"}
             ],
             max_tokens=300,
             temperature=0.7
@@ -109,14 +109,13 @@ def generate_marketing_email(prompt, touches, persona, marketing_asset, objectiv
 # Updated prompt generation logic
 def create_prompt(outreach_type, persona, marketing_asset, num_touches):
     if outreach_type == "Post MQL Outreach":
-        # Post MQL outreach email logic
-        prompt = (f"Write a follow-up email to a {persona} after they have read the marketing asset: {marketing_asset}. "
-                  f"The goal of the email is to see if anything resonated with them from a sales perspective. "
+        # Correct Post MQL outreach email logic
+        prompt = (f"The goal of the email is to see if anything resonated with them from a sales perspective. "
                   f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
     else:
-        # General nurturing email logic
+        # Correct general nurturing email logic
         prompt = (f"Create a {outreach_type} email for the following persona: {persona}. "
-                  f"Use the marketing asset: {marketing_asset}. The email should be no more than two paragraphs."
+                  f"Use the marketing asset: {marketing_asset}. The email should be no more than two paragraphs. "
                   f"Generate {num_touches} emails in a nurturing sequence.")
     return prompt
 
@@ -160,9 +159,9 @@ def main():
     )
 
     # Slider for number of touches
-    num_touches = st.slider("Number of touches", 1, 10, 3) if outreach_type == "Post MQL Outreach" else 1
+    num_touches = st.slider("Number of touches", 1, 10, 3)
 
-    # Generate the email sequence prompt without showing it
+    # Generate the email sequence prompt
     prompt = create_prompt(outreach_type, target_persona, marketing_asset_text or "No asset uploaded", num_touches)
 
     # Button to generate email
