@@ -7,24 +7,30 @@ import os
 # Configure OpenAI API key via environment variable
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Custom CSS injection for modern design
+# Inject custom CSS with the background image
 def add_custom_css():
-    st.markdown("""
+    st.markdown(
+        """
         <style>
-            /* Background and body styling */
+            /* Set background image */
             body {
-                background: linear-gradient(135deg, #f0f9ff, #ffffff);
+                background-image: url('https://i.ibb.co/72VZc2K/dark-blue-technology-background-free-vector-1.jpg');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
                 font-family: 'Inter', sans-serif;
+                color: #ffffff;
             }
 
-            /* Main container style */
+            /* Main content container to ensure readability over the background */
             .main-container {
                 padding: 2rem;
-                background-color: #ffffff;
+                background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
                 border-radius: 12px;
                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
                 margin: 2rem auto;
                 max-width: 800px;
+                color: #333; /* Text color */
             }
 
             /* Headings */
@@ -36,22 +42,7 @@ def add_custom_css():
                 margin-bottom: 2rem;
             }
 
-            h2, h3 {
-                color: #333;
-                font-size: 1.5rem;
-                margin-bottom: 1rem;
-                font-weight: 500;
-            }
-
-            /* Sub-heading for prompt preview */
-            .stTextArea label {
-                font-size: 1.2rem;
-                font-weight: 500;
-                margin-bottom: 1rem;
-                color: #007bff;
-            }
-
-            /* Input fields */
+            /* Input field styles */
             .stTextInput > div > input, .stTextArea textarea {
                 padding: 1rem;
                 border-radius: 10px;
@@ -59,22 +50,10 @@ def add_custom_css():
                 border: 1px solid #e3e4e8;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 font-size: 1rem;
+                color: #333;
             }
 
-            /* File uploader */
-            .stFileUploader label {
-                font-size: 1.2rem;
-                font-weight: 500;
-                color: #007bff;
-            }
-
-            /* Slider styling */
-            .stSlider > div {
-                padding: 1rem 0;
-                font-size: 1.2rem;
-            }
-
-            /* Button styles */
+            /* Buttons */
             .stButton button {
                 background-color: #007bff;
                 color: white;
@@ -92,7 +71,7 @@ def add_custom_css():
                 transform: translateY(-3px);
             }
 
-            /* Success message */
+            /* Success and error messages */
             .stAlert {
                 background-color: #e3f7ed;
                 border: 1px solid #d4edda;
@@ -100,18 +79,11 @@ def add_custom_css():
                 padding: 1rem;
                 border-radius: 8px;
             }
-            
-            /* Error message styling */
-            .stAlert .error {
-                background-color: #f8d7da;
-                color: #721c24;
-                border: 1px solid #f5c6cb;
-                border-radius: 8px;
-                padding: 1rem;
-                margin-top: 1rem;
-            }
+
         </style>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
 # Function to call OpenAI API
 def generate_marketing_email(prompt, touches, persona, marketing_asset, objective):
