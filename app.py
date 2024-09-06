@@ -1,9 +1,11 @@
 import streamlit as st
 from openai import OpenAI
-
-client = OpenAI(api_key='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')
 import PyPDF2
 from openai import OpenAIError  # Correct import for OpenAIError
+import os  # For loading environment variables
+
+# Configure OpenAI API key via environment variable
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 # Configure OpenAI API key via Streamlit secrets
 
