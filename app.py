@@ -118,6 +118,7 @@ def create_prompt(outreach_type, persona, marketing_asset, num_touches):
         prompt = (f"Create a {outreach_type} email for the following persona: {persona}. "
                   f"Use the marketing asset: {marketing_asset}. "
                   f"Generate {num_touches} emails in a nurturing sequence.")
+                  f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
     return prompt
 
 # Function to process uploaded file
