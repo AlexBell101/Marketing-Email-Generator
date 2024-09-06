@@ -150,7 +150,7 @@ def main():
 
     # Prompt preview
     st.subheader("Generated Prompt Preview")
-    prompt = f"Create a {outreach_type} for the following target persona:\n{target_persona}\nUsing the marketing asset:\n{marketing_asset_text or 'No asset uploaded'}."
+    prompt = f"Create a {outreach_type} for the following target persona:\n{target_persona}\nUsing the marketing asset:\n{marketing_asset_text or 'No asset uploaded'}. If the outreach type is post MQL then the email is designed to follow up with the user after they have read the content. Create the following number of emails for this email sequence: {num_touches} "
 
     st.text_area("Prompt to be sent to ChatGPT", prompt, height=150)
 
