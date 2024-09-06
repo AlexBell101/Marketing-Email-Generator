@@ -72,9 +72,6 @@ def add_custom_css():
 # Inject the custom CSS
 add_custom_css()
 
-# Title section
-st.title("Marketing Email Generator")
-
 
 
 # Configure OpenAI API key via environment variable
