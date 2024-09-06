@@ -106,21 +106,6 @@ def generate_marketing_email(prompt, touches, persona, marketing_asset, objectiv
         st.error(f"An error occurred: {str(e)}")
         return None
 
-# Updated prompt generation logic
-def create_prompt(outreach_type, persona, marketing_asset, num_touches):
-    if outreach_type == "Post MQL Outreach":
-        # Post MQL outreach email logic
-        prompt = (f"Write a follow-up email to a {persona} after they have read the marketing asset: {marketing_asset}. "
-                  f"The goal of the email is to see if anything resonated with them from a sales perspective. "
-                  f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
-    else:
-        # General nurturing email logic
-        prompt = (f"Create a {outreach_type} email for the following persona: {persona}. "
-                  f"Use the marketing asset: {marketing_asset}. "
-                  f"Generate {num_touches} emails in a nurturing sequence.")
-                  f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
-    return prompt
-
 # Function to process uploaded file
 def process_uploaded_file(file):
     if file.type == "application/pdf":
@@ -163,8 +148,11 @@ def main():
     # Slider for number of touches
     num_touches = st.slider("Number of touches", 1, 10, 3) if outreach_type == "Post MQL Outreach" else 1
 
-    # Generate the email sequence prompt without showing it
-    prompt = create_prompt(outreach_type, target_persona, marketing_asset_text or "No asset uploaded", num_touches)
+    # Prompt preview
+    st.subheader("Generated Prompt Preview")
+    prompt = f"Create a {outreach_type} for the following target persona:\n{target_persona}\nUsing the marketing asset:\n{marketing_asset_text or 'No asset uploaded'}."
+
+    st.text_area("Prompt to be sent to ChatGPT", prompt, height=150)
 
     # Button to generate email
     if st.button("Generate Email Copy"):
