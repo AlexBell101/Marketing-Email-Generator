@@ -19,7 +19,6 @@ def add_custom_css():
                 background-position: center;
                 background-repeat: no-repeat;
                 font-family: 'Inter', sans-serif;
-                color: #ffffff;
             }
 
             /* Main content container to ensure readability over the background */
@@ -42,7 +41,7 @@ def add_custom_css():
                 margin-bottom: 2rem;
             }
 
-            /* Input field styles */
+            /* Fix text input and textarea text color */
             .stTextInput > div > input, .stTextArea textarea {
                 padding: 1rem;
                 border-radius: 10px;
@@ -50,7 +49,12 @@ def add_custom_css():
                 border: 1px solid #e3e4e8;
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
                 font-size: 1rem;
-                color: #333;
+                color: #333; /* Set input text color to dark gray */
+            }
+
+            /* Placeholder text color */
+            .stTextInput > div > input::placeholder, .stTextArea textarea::placeholder {
+                color: #adb5bd;
             }
 
             /* Buttons */
