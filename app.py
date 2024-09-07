@@ -77,7 +77,7 @@ def main():
     # Outreach type select box
     outreach_type = st.selectbox(
         "Select Outreach Type",
-        ("Post MQL Outreach", "Nurturing Email")
+        ("Post MQL Outreach", "Promotional Email")
     )
 
     # Slider for number of touches
