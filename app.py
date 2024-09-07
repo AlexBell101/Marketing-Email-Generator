@@ -158,7 +158,16 @@ def main():
             st.success("File uploaded and processed successfully.")
 
     # Target persona
-    target_persona = st.text_area("Target Persona", placeholder="Describe your target audience")
+    personas = [
+    "Data Engineer",
+    "Data Engineer Mgr",
+    "ML/AI Engineer",
+    "ML/AI Engineer Mgr",
+    "VP/CTO",
+    "VP/CXO",
+    "Analyst/Scientist"
+]
+target_persona = st.selectbox("Select Target Persona", options=personas)
 
     # Outreach type select box
     outreach_type = st.selectbox(
