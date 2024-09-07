@@ -109,14 +109,22 @@ def generate_marketing_email(prompt, touches, persona, marketing_asset, objectiv
 # Updated prompt generation logic
 def create_prompt(outreach_type, persona, marketing_asset, num_touches):
     if outreach_type == "Post MQL Outreach":
-        # Correct Post MQL outreach email logic
-        prompt = (f"The goal of the email is to see if anything resonated with them from a sales perspective. "
-                  f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
+        # Post MQL outreach email logic
+        prompt = (
+            f"Write a follow-up email to a {persona} after they have read the marketing asset: {marketing_asset}. "
+            f"The goal of the email is to see if anything resonated with them from a sales perspective. "
+            f"Please refer to www.astronomer.io for information about our company and docs.astronomer.io for technical details. "
+            f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence."
+        )
     else:
-        # Correct general nurturing email logic
-        prompt = (f"Create a {outreach_type} email for the following persona: {persona}. "
-                  f"Use the marketing asset: {marketing_asset}. The email should be no more than two paragraphs. "
-                  f"Generate {num_touches} emails in a nurturing sequence.")
+        # General nurturing email logic
+        prompt = (
+            f"Create a {outreach_type} email for the following persona: {persona}. "
+            f"Use the marketing asset: {marketing_asset}. "
+            f"Refer to www.astronomer.io for our company's product information and docs.astronomer.io for technical insights. "
+            f"The email should be no more than two paragraphs. "
+            f"Generate {num_touches} emails in a nurturing sequence."
+        )
     return prompt
 
 # Function to process uploaded file
