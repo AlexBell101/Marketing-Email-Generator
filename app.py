@@ -72,7 +72,7 @@ def main():
     company_domain = st.text_input("Enter your company domain (optional)", placeholder="e.g., www.example.com")
 
     # Marketing asset or description input
-    marketing_asset_or_description = st.text_input("Provide a URL or a description of the promotion/call to action", placeholder="Enter URL or description")
+    marketing_asset_or_description = st.text_input("Provide an asset URL, landing page link or a description of the promotion/call to action", placeholder="Enter URL or description")
 
     # Free text input for persona
     target_persona = st.text_input("Enter Target Persona", placeholder="e.g., Data Engineer, Marketing Manager")
