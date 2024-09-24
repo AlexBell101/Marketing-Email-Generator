@@ -66,6 +66,8 @@ def main():
     personas = [
         "Data Engineer",
         "Data Engineer Mgr",
+        "Database Admin"
+        "IT Admin"
         "ML/AI Engineer",
         "ML/AI Engineer Mgr",
         "VP/CTO",
