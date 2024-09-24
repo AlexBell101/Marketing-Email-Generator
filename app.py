@@ -6,12 +6,18 @@ import os
 # Configure OpenAI API key via environment variable
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-# Inject custom CSS with the background image
+# Inject custom CSS to load Roboto font and apply globally
 def add_custom_css():
     st.markdown(
         """
         <style>
-            /* Custom styles omitted for brevity */
+            /* Import Roboto font from Google */
+            @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+            /* Apply Roboto font to the whole app */
+            html, body, [class*="css"]  {
+                font-family: 'Roboto', sans-serif;
+            }
         </style>
         """,
         unsafe_allow_html=True
@@ -34,18 +40,21 @@ def generate_marketing_email(prompt, touches, persona, marketing_asset_url, obje
         st.error(f"An error occurred: {str(e)}")
         return None
 
-# Function to generate the prompt, referencing a URL instead of a file
-def create_prompt(outreach_type, persona, marketing_asset_url, num_touches):
+# Function to generate the prompt with both URL/Description and company domain
+def create_prompt(outreach_type, persona, marketing_asset_or_description, num_touches, company_domain):
+    if company_domain:
+        domain_text = f"Refer to {company_domain} for more information about the company."
+    else:
+        domain_text = ""
+
     if outreach_type == "Post MQL Outreach":
-        prompt = (f"Write a follow-up email to a {persona} after they visited {marketing_asset_url}. "
+        prompt = (f"Write a follow-up email to a {persona} after they engaged with {marketing_asset_or_description}. "
                   f"The goal of the email is to see if anything resonated with them from a sales perspective. "
-                  f"Please refer to www.astronomer.io for information about our company and docs.astronomer.io for technical details. "
-                  f"The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
+                  f"{domain_text} The email should be no more than two paragraphs. Generate {num_touches} emails in a nurturing sequence.")
     else:
         prompt = (f"Create a {outreach_type} email for the following persona: {persona}. "
-                  f"Use the information from this URL: {marketing_asset_url}. "
-                  f"Refer to www.astronomer.io for our company's product information and docs.astronomer.io for technical insights. "
-                  f"The email should be no more than two paragraphs. "
+                  f"Use the information from this {marketing_asset_or_description}. "
+                  f"{domain_text} The email should be no more than two paragraphs. "
                   f"Generate {num_touches} emails in a nurturing sequence.")
     return prompt
 
@@ -59,22 +68,14 @@ def main():
 
     st.subheader("Provide the details for your email copy")
 
-    # Marketing asset URL input
-    marketing_asset_url = st.text_input("Provide a URL for the marketing asset (optional)", placeholder="https://example.com/asset")
+    # Company Domain input (optional)
+    company_domain = st.text_input("Enter your company domain (optional)", placeholder="e.g., www.example.com")
 
-    # Persona picklist (dropdown)
-    personas = [
-        "Data Engineer",
-        "Data Engineer Mgr",
-        "Database Admin"
-        "IT Admin"
-        "ML/AI Engineer",
-        "ML/AI Engineer Mgr",
-        "VP/CTO",
-        "VP/CXO",
-        "Analyst/Scientist"
-    ]
-    target_persona = st.selectbox("Select Target Persona", options=personas)
+    # Marketing asset or description input
+    marketing_asset_or_description = st.text_input("Provide a URL or a description of the promotion/call to action", placeholder="Enter URL or description")
+
+    # Free text input for persona
+    target_persona = st.text_input("Enter Target Persona", placeholder="e.g., Data Engineer, Marketing Manager")
 
     # Outreach type select box
     outreach_type = st.selectbox(
@@ -85,13 +86,13 @@ def main():
     # Slider for number of touches
     num_touches = st.slider("Number of touches", 1, 10, 3) if outreach_type == "Post MQL Outreach" else 1
 
-    # Generate the email sequence prompt with the URL reference
-    prompt = create_prompt(outreach_type, target_persona, marketing_asset_url or "No URL provided", num_touches)
+    # Generate the email sequence prompt
+    prompt = create_prompt(outreach_type, target_persona, marketing_asset_or_description or "No URL/Description provided", num_touches, company_domain)
 
     # Button to generate email
     if st.button("Generate Email Copy"):
         with st.spinner("Generating marketing email..."):
-            result = generate_marketing_email(prompt, num_touches, target_persona, marketing_asset_url, "email engagement")
+            result = generate_marketing_email(prompt, num_touches, target_persona, marketing_asset_or_description, "email engagement")
             if result:
                 st.subheader("Generated Marketing Email Copy")
                 st.write(result)
